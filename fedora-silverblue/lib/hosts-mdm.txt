@@ -1,0 +1,195 @@
+# MDM / RMM domain blocklist
+# Used by harden.sh to null-route Mobile Device Management and Remote Monitoring
+# and Management infrastructure via /etc/hosts.
+#
+# Format: one domain per line. Wildcard subdomains are noted in comments but
+# /etc/hosts does not support wildcards — the script handles common subdomains.
+# Lines starting with # are comments and are ignored by the script.
+#
+# Last reviewed: 2026-03
+
+# ---------------------------------------------------------------------------
+# Jamf Pro / Jamf Now
+# MDM platform widely used in enterprise Apple and Linux environments.
+# Enrollment endpoint is the primary target; cloud infrastructure is secondary.
+# ---------------------------------------------------------------------------
+jamf.com
+www.jamf.com
+mycompany.jamfcloud.com
+enrollment.jamfcloud.com
+services.jamf.com
+resources.jamf.com
+jamf.net
+
+# ---------------------------------------------------------------------------
+# Microsoft Intune / Azure MDM / Entra ID (formerly Azure AD)
+# Microsoft's cloud-based MDM. Enrollment is triggered via Entra ID join.
+# These endpoints handle device enrollment, policy push, and compliance checks.
+# ---------------------------------------------------------------------------
+manage.microsoft.com
+enrollment.manage.microsoft.com
+enrollmentserver.manage.microsoft.com
+fef.msua01.manage.microsoft.com
+fef.msua02.manage.microsoft.com
+fef.msua03.manage.microsoft.com
+fef.msua04.manage.microsoft.com
+fef.msua05.manage.microsoft.com
+fef.msua06.manage.microsoft.com
+dm.microsoft.com
+r.manage.microsoft.com
+enterpriseregistration.windows.net
+enterpriseenrollment.windows.net
+enterpriseenrollment-s.manage.microsoft.com
+device.login.microsoftonline.com
+login.microsoftonline.com
+portal.manage.microsoft.com
+go.microsoft.com
+
+# ---------------------------------------------------------------------------
+# Kandji
+# MDM platform for Apple and Linux (including Fedora).
+# ---------------------------------------------------------------------------
+kandji.io
+api.kandji.io
+agent.kandji.io
+mdm.kandji.io
+updates.kandji.io
+
+# ---------------------------------------------------------------------------
+# Fleet (open source MDM / device management)
+# ---------------------------------------------------------------------------
+fleetdm.com
+dogfood.fleetdm.com
+updates.fleetdm.com
+
+# ---------------------------------------------------------------------------
+# VMware Workspace ONE (formerly AirWatch)
+# Enterprise MDM/UEM platform. Uses proprietary agent (Hub) for enrollment.
+# ---------------------------------------------------------------------------
+awmdm.com
+air-watch.com
+workspaceone.com
+ws1.vmware.com
+na1.hub.vmwareidentity.com
+eu1.hub.vmwareidentity.com
+horizon.vmware.com
+
+# ---------------------------------------------------------------------------
+# Ivanti (formerly MobileIron)
+# Enterprise UEM/MDM platform.
+# ---------------------------------------------------------------------------
+mobileiron.com
+m.mobileiron.net
+mycompany.mobileiron.com
+ivanti.com
+cloud.ivanti.com
+mdm.ivanti.com
+
+# ---------------------------------------------------------------------------
+# Mosyle
+# MDM for Apple devices. Less common on Linux but included for completeness.
+# ---------------------------------------------------------------------------
+mosyle.com
+api.mosyle.com
+mdm.mosyle.com
+business.mosyle.com
+mosyleauth.com
+
+# ---------------------------------------------------------------------------
+# Addigy
+# Cloud-based Apple MDM.
+# ---------------------------------------------------------------------------
+addigy.com
+app.addigy.com
+mdm.addigy.com
+api.addigy.com
+
+# ---------------------------------------------------------------------------
+# SimpleMDM
+# ---------------------------------------------------------------------------
+simplemdm.com
+mdm.simplemdm.com
+api.simplemdm.com
+a.simplemdm.com
+
+# ---------------------------------------------------------------------------
+# Cisco Meraki Systems Manager (MDM component)
+# ---------------------------------------------------------------------------
+meraki.com
+systems-manager.meraki.com
+sm.meraki.com
+n12.meraki.com
+
+# ---------------------------------------------------------------------------
+# ManageEngine (MDM Plus / Endpoint Central)
+# ---------------------------------------------------------------------------
+manageengine.com
+mdm.manageengine.com
+uem.manageengine.com
+me-mdm.manageengine.com
+onpremise.manageengine.com
+
+# ---------------------------------------------------------------------------
+# Absolute (Computrace / Absolute Persistence)
+# BIOS-level persistence agent that survives OS reinstalls.
+# Particularly important to block — phone-home even if software is "uninstalled".
+# ---------------------------------------------------------------------------
+absolute.com
+absoluteapps.com
+agent.absolute.com
+search.namequery.com
+bh.namequery.com
+
+# ---------------------------------------------------------------------------
+# Puppet (infrastructure automation / config management agent)
+# Blocks Puppet agent check-in to external Puppet master/Foreman.
+# ---------------------------------------------------------------------------
+puppet.com
+puppet-master.example.com
+foreman.example.com
+pe-201630-master.example.com
+
+# ---------------------------------------------------------------------------
+# Chef Infra (configuration management)
+# Blocks Chef client check-in to Chef Automate / Infra Server.
+# ---------------------------------------------------------------------------
+chef.io
+api.chef.io
+manage.chef.io
+automate.chef.io
+
+# ---------------------------------------------------------------------------
+# SaltStack / Salt (open source config management with remote execution)
+# Blocks Salt minion check-in to external Salt master.
+# ---------------------------------------------------------------------------
+saltproject.io
+repo.saltproject.io
+
+# ---------------------------------------------------------------------------
+# Miradore MDM
+# ---------------------------------------------------------------------------
+miradore.com
+online.miradore.com
+api.miradore.com
+
+# ---------------------------------------------------------------------------
+# SOTI MobiControl
+# ---------------------------------------------------------------------------
+soti.net
+mobicontrol.soti.net
+cloud.soti.net
+
+# ---------------------------------------------------------------------------
+# Hexnode UEM
+# ---------------------------------------------------------------------------
+hexnode.com
+mdm.hexnode.com
+api.hexnode.com
+
+# ---------------------------------------------------------------------------
+# IBM MaaS360
+# ---------------------------------------------------------------------------
+maas360.com
+www.maas360.com
+api.maas360.com
+portal.maas360.com
