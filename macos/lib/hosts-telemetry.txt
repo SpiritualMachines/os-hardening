@@ -1,0 +1,151 @@
+# Telemetry / crash reporting / analytics domain blocklist
+# Used by harden.sh to null-route known data collection endpoints via /etc/hosts.
+#
+# WARNING: Some domains here may overlap with update or functional infrastructure.
+#          Comments note where this is the case. Review before applying.
+#
+# Format: one domain per line. Lines starting with # are ignored.
+#
+# Last reviewed: 2026-03
+
+# ---------------------------------------------------------------------------
+# Apple telemetry and diagnostics
+# Apple collects crash reports, diagnostic data, and analytics through several
+# dedicated endpoints. The entries below target submission-only domains that
+# serve no functional purpose for software updates or iCloud services.
+#
+# NOTE: Do NOT block apple.com, swscan.apple.com, swcdn.apple.com,
+#       or updates.apple.com — those are needed for software updates.
+# NOTE: Do NOT block albert.apple.com — it is also used by iMessage and
+#       FaceTime activation. Blocking it will break iMessage activation.
+# NOTE: Do NOT block gateway.icloud.com — breaks iCloud services broadly.
+# ---------------------------------------------------------------------------
+
+# Apple crash and diagnostic submission
+# radarsubmissions.apple.com — crash report and bug report submission (Feedback Assistant)
+radarsubmissions.apple.com
+# feedbackassistant.apple.com — Feedback Assistant app submission endpoint
+feedbackassistant.apple.com
+# diagassets.apple.com — diagnostic asset downloads used by crash reporter
+diagassets.apple.com
+# iphonesubmissions.apple.com — device submission endpoint
+iphonesubmissions.apple.com
+# securemetrics.apple.com — Apple security metrics collection
+securemetrics.apple.com
+# xp.apple.com — Apple analytics and advertising attribution
+xp.apple.com
+
+# ---------------------------------------------------------------------------
+# Mozilla / Firefox
+# Firefox sends telemetry, crash reports, and geolocation queries.
+# NOTE: blocking telemetry.mozilla.org does not break browsing or updates.
+# NOTE: blocking aus5.mozilla.org WILL prevent Firefox update checks.
+# ---------------------------------------------------------------------------
+telemetry.mozilla.org
+incoming.telemetry.mozilla.org
+crash-reports.mozilla.com
+crash-stats.mozilla.com
+crash-reports-xpsp2.mozilla.com
+mozilla-ohttp-relay.fastly.net
+location.services.mozilla.com
+shavar.services.mozilla.com
+safebrowsing.googleapis.com
+# Sponsored tiles / Pocket data collection
+contile.services.mozilla.com
+spocs.getpocket.com
+getpocket.cdn.mozilla.net
+
+# ---------------------------------------------------------------------------
+# Google / Chromium
+# Chromium-based browsers send update pings, safe-browsing lookups, and
+# crash reports. NOTE: blocking update.googleapis.com prevents safe-browsing
+# updates and some extension updates — tradeoff is documented here.
+# ---------------------------------------------------------------------------
+# Crash reporting
+clients2.google.com
+# Usage statistics / UMA
+uma.clients2.google.com
+# NOTE: the following breaks Safe Browsing — remove from list if you use it
+safebrowsing.google.com
+safebrowsing.googleapis.com
+# Chromium component/extension update infrastructure
+# NOTE: blocking this will prevent Chromium component updates
+# componentupdater.googleapis.com
+
+# ---------------------------------------------------------------------------
+# Sentry.io — error and performance monitoring
+# Many macOS applications send crash/error data to Sentry.
+# ---------------------------------------------------------------------------
+sentry.io
+o0.ingest.sentry.io
+o1.ingest.sentry.io
+o2.ingest.sentry.io
+ingest.sentry.io
+browser.sentry-cdn.com
+js.sentry-cdn.com
+
+# ---------------------------------------------------------------------------
+# Datadog — application performance monitoring
+# Used by some macOS and Electron apps for telemetry.
+# ---------------------------------------------------------------------------
+datadoghq.com
+browser-intake-datadoghq.com
+intake.logs.datadoghq.com
+http-intake.logs.datadoghq.com
+
+# ---------------------------------------------------------------------------
+# Amplitude — product analytics
+# Used by many Electron and native macOS apps.
+# ---------------------------------------------------------------------------
+amplitude.com
+api.amplitude.com
+api2.amplitude.com
+
+# ---------------------------------------------------------------------------
+# Segment — customer data platform (analytics relay)
+# ---------------------------------------------------------------------------
+segment.io
+api.segment.io
+cdn.segment.com
+cdn.segment.io
+
+# ---------------------------------------------------------------------------
+# Mixpanel — product analytics
+# ---------------------------------------------------------------------------
+mixpanel.com
+api.mixpanel.com
+api-js.mixpanel.com
+
+# ---------------------------------------------------------------------------
+# Heap Analytics
+# ---------------------------------------------------------------------------
+heapanalytics.com
+cdn.heapanalytics.com
+
+# ---------------------------------------------------------------------------
+# Fullstory — session recording / analytics
+# ---------------------------------------------------------------------------
+fullstory.com
+rs.fullstory.com
+edge.fullstory.com
+
+# ---------------------------------------------------------------------------
+# Hotjar — session recording / heatmaps
+# ---------------------------------------------------------------------------
+hotjar.com
+insights.hotjar.com
+static.hotjar.com
+script.hotjar.com
+
+# ---------------------------------------------------------------------------
+# New Relic — application monitoring
+# ---------------------------------------------------------------------------
+newrelic.com
+bam.nr-data.net
+bam-cell.nr-data.net
+js-agent.newrelic.com
+
+# ---------------------------------------------------------------------------
+# Elastic APM
+# ---------------------------------------------------------------------------
+apm.elastic.co

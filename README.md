@@ -9,10 +9,12 @@ A collection of post-installation hardening scripts for common operating systems
 | `fedora/` | Fedora Workstation / KDE Plasma | Desktop (mutable) |
 | `fedora-silverblue/` | Fedora Silverblue | Desktop (immutable, full) |
 | `fedora-silverblue-light/` | Fedora Silverblue | Desktop (immutable, no extra packages) |
+| `ubuntu-desktop/` | Ubuntu Desktop LTS | Desktop |
 | `ubuntu-server/` | Ubuntu Server LTS | Headless server |
 | `freebsd-unraid/freebsd/` | FreeBSD | Server / NAS |
 | `freebsd-unraid/unraid/` | Unraid | NAS / homelab storage |
 | `windows11/` | Windows 11 | Desktop |
+| `macos/` | macOS (Sonoma / Sequoia) | Desktop |
 
 ---
 
@@ -33,7 +35,7 @@ A collection of post-installation hardening scripts for common operating systems
 These scripts defend against:
 
 1. **MDM/RMM push** — IT departments, OEMs, or malicious actors enrolling or managing a device without consent via tools like Intune, Jamf, or commercial RMM agents.
-2. **OS vendor telemetry** — Microsoft, Canonical, and others collecting usage data and call-home behavior.
+2. **OS vendor telemetry** — Microsoft, Canonical, Apple, and others collecting usage data and call-home behavior.
 3. **Network-level attackers** — Unauthorized access via open services, default credentials, or unfiltered ports.
 4. **Physical access attackers** — Cold boot and evil maid attacks, mitigated by encryption configuration guidance.
 5. **Malicious content at rest** — Relevant to NAS/storage use cases: accidental execution of malware stored on the array, service-triggered parsing of crafted files, path traversal via symlinks.
@@ -70,6 +72,18 @@ These scripts do **not** attempt to defend against nation-state adversaries or s
 - Two variants: full (installs inotify-tools via rpm-ostree for real-time monitoring) and light (no extra packages, uses checksum-based polling)
 - Flatpak sandboxing enforcement
 
+### Ubuntu Desktop — additional
+
+- AppArmor enforcement verified and enforced
+- UFW configured with default-deny
+- GNOME privacy settings applied via gsettings (location services, connectivity checks, telemetry)
+- Ubuntu Advantage / Pro call-home and MOTD telemetry disabled
+- apport (crash reporter) and whoopsie (crash submission daemon) disabled
+- kerneloops reporter disabled
+- Snap package permissions reviewed
+- Avahi / mDNS advertising disabled where not needed
+- cups exposure minimized
+
 ### Ubuntu Server — additional
 
 - UFW configured with default-deny
@@ -101,6 +115,25 @@ See [`freebsd-unraid/unraid/INSTRUCTIONS.md`](freebsd-unraid/unraid/INSTRUCTIONS
 - BitLocker guidance included
 
 See [`windows11/harden.ps1`](windows11/harden.ps1) inline documentation for the full list of registry paths and GPO settings applied.
+
+### macOS
+
+- Telemetry and usage analytics disabled via `defaults write` and launchctl unloads
+- Apple analytics and telemetry domains null-routed via hosts file
+- Siri and Siri data collection disabled
+- Spotlight Suggestions and Look Up disabled (prevent query exfiltration to Apple)
+- MDM enrollment blocked (profile installation restricted; Jamf/Intune enrollment endpoints null-routed)
+- Remote Login (SSH), Remote Management (ARD/VNC), and Remote Apple Events disabled
+- Application Firewall enabled and hardened; pf configured for additional outbound restrictions
+- AirDrop restricted to contacts only
+- iCloud consumer sync features disabled where not explicitly wanted
+- Bonjour/mDNS advertising restricted where not needed
+- FileVault encryption verified
+- Crash reporter and DiagnosticReporter submission disabled
+- Unnecessary Launch Agents and Launch Daemons removed
+- SIP and Gatekeeper are intentionally **kept enabled** — these are macOS's primary kernel integrity and code-signing controls
+
+See [`macos/harden.sh`](macos/harden.sh) inline documentation for the full list of `defaults` domains and launchctl targets modified.
 
 ---
 
@@ -196,9 +229,11 @@ sudo bash harden.sh --help
 | Fedora (mutable) | Run as root; `dnf` available |
 | Fedora Silverblue (full) | Run as root; internet access for `rpm-ostree` |
 | Fedora Silverblue (light) | Run as root; no extra packages required |
+| Ubuntu Desktop | Run as root; `apt` available |
 | Ubuntu Server | Run as root; `apt` available |
 | Unraid | Run as root on the Unraid host |
 | Windows 11 | PowerShell 5.1+; run as Administrator |
+| macOS | Run as admin user (sudo); macOS Sonoma 14+ or Sequoia 15+ |
 
 ---
 
